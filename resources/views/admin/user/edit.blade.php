@@ -20,6 +20,7 @@
                 <div class="row m-1">
                     <!-- left column -->
                     <div class="col-md-12">
+                        @include('_messages')
                         <div class="card card-primary">
                             <form method="post" action="">
                                 @csrf

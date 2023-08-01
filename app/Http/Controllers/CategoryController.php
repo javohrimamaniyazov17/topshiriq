@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $category->user_id = Auth::user()->id;
         $category->save();
 
-        return redirect('user/category/list');
+        return redirect('user/category/list')->with('success', 'Kategoriya muvaffaqiyatli qo\'shildi');
     }
 
     public function edit($id)
@@ -56,7 +56,7 @@ class CategoryController extends Controller
             return view('user.category.edit', compact('category'));
         }
 
-        return redirect('user/category/list');
+        return redirect('user/category/list')->with('error', "Siz bunday huquqqa ega emassiz");
     }
 
     public function update(Request $request, $id)
@@ -67,7 +67,6 @@ class CategoryController extends Controller
         ]);
 
         $category = Category::findOrFail($id);
-        $category->status = $request->status;
         if (Auth::user()->id === $category->user_id) {
             $category->name = $request->name;
             if (!empty($request->file('image'))) {
@@ -85,10 +84,10 @@ class CategoryController extends Controller
             $category->status = $request->status;
             $category->save();
 
-            return redirect('user/category/list');
+            return redirect('user/category/list')->with('succes', 'Kategoriya ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
         }
 
-        return redirect('user/category/list');
+        return redirect('user/category/list')->with('error', "Siz bunday huquqqa ega emassiz");
     }
 
     public function delete($id)
@@ -101,7 +100,7 @@ class CategoryController extends Controller
             return redirect('user/category/list');
         }
 
-        return redirect('user/category/list');
+        return redirect('user/category/list')->with('error', "Siz bunday huquqqa ega emassiz");
     }
 
     public function show($id)

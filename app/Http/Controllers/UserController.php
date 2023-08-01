@@ -31,7 +31,7 @@ class UserController extends Controller
       $user->user_type = 0;
       $user->save();
 
-      return redirect('admin/users/list');
+      return redirect('admin/users/list')->with('success', 'Foydalanuvchi muvaffaqiyatli qo\'shildi');
     }
 
     public function edit(Request $request, $id) {
@@ -51,7 +51,7 @@ class UserController extends Controller
       $user->password = Hash::make($request->password);
       $user->save();
 
-      return redirect('admin/users/list');
+      return redirect('admin/users/list')->with('success', 'Foydalanuvchi ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
 
     }
 
@@ -59,6 +59,6 @@ class UserController extends Controller
       $user = User::findOrFail($id);
       $user->delete();
 
-      return redirect('admin/user/list');
+      return redirect('admin/user/list')->with('success', 'Foydalanuvchi ma\'lumotlari muvaffaqiyatli o\'chirildi');
     }
 }

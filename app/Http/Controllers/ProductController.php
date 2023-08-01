@@ -11,17 +11,20 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function list() {
+    public function list()
+    {
         $getRecord = Product::select('products.*', 'categories.name as category_name')->join('categories', 'categories.id', '=', 'products.category_id', 'left')->get();
         return view('user.product.list', compact('getRecord'));
-    } 
+    }
 
-    public function add() {
+    public function add()
+    {
         $category = Category::get();
         return view('user.product.add', compact('category'));
     }
 
-    public function insert(Request $request) {
+    public function insert(Request $request)
+    {
         request()->validate([
             'name' => 'required|max:255',
             'image' => 'required',
@@ -44,18 +47,23 @@ class ProductController extends Controller
         $product->user_id = Auth::user()->id;
         $product->save();
 
-        return redirect('user/product/list');
+        return redirect('user/product/list')->with('success', 'Mahsulot muvaffaqiyatli qo\'shildi');
     }
 
-    public function edit($id, Request $request) {
+    public function edit($id, Request $request)
+    {
         $category = Category::get();
         $product = Product::findOrFail($id);
+        if (Auth::user()->id === $product->user_id) {
+            return view('user.product.edit', compact('product', 'category'));
+        }
 
-        return view('user.product.edit', compact('product', 'category'));
+        return redirect('user/product/list')->with('error', "Siz bunday huquqqa ega emassiz");
     }
 
 
-    public function update($id, Request $request) {
+    public function update($id, Request $request)
+    {
         request()->validate([
             'name' => 'required|max:255',
             'image' => 'required',
@@ -63,12 +71,11 @@ class ProductController extends Controller
         ]);
 
         $product = Product::findOrFail($id);
-        $product->name = $request->name;
-        $product->category_id = $request->category_id;
-        $product->status = $request->status;
 
         if (Auth::user()->id === $product->user_id) {
             $product->name = $request->name;
+            $product->category_id = $request->category_id;
+            $product->status = $request->status;
             if (!empty($request->file('image'))) {
                 if (!empty($product)) {
                     unlink('images/product/' . $product->image);
@@ -81,20 +88,24 @@ class ProductController extends Controller
 
                 $product->image = $filename;
             }
-            $product->status = $request->status;
             $product->save();
 
-            return redirect('user/product/list');
+            return redirect('user/product/list')->with('success', 'Mahsulot ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
         }
-    
-        return redirect('user/product/list');
+
+        return redirect('user/product/list')->with('error', "Siz bunday huquqqa ega emassiz");
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $product = Product::findOrFail($id);
-        $product->delete();
+        if (Auth::user()->id === $product->user_id) {
+            $product->delete();
 
-        return redirect('user/product/list');
+            return redirect('user/product/list')->with('success', 'Mahsulot muvaffaqiyatli o\'chirildi');
+        }
+
+        return redirect('user/product/list')->with('error', "Siz bunday huquqqa ega emassiz");
     }
 
     public function show($id)

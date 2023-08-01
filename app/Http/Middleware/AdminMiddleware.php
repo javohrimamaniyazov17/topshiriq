@@ -19,9 +19,10 @@ class AdminMiddleware
         if (!empty(Auth::check())) {
             if (Auth::user()->user_type == 1) {
                 return $next($request);
-            } else {
+            } else{
                 return redirect(url('user/dashboard'));
             }
         }
+        return redirect('/');
     }
 }
