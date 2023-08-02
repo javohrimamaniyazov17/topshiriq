@@ -65,6 +65,7 @@
                     <th>#</th>
                     <th>Product Name</th>
                     <th>Category Name</th>
+                    <th>Created By</th>
                     <th>Image</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -76,6 +77,7 @@
                         <td>{{ $item->id}}</td>
                         <td>{{ $item->name}}</td>
                         <td>{{ $item->category_name}}</td>
+                        <td>{{ $item->created_by_name }}</td>
                         <td>
                           <img src="{{ asset('/images/product/'.$item->image)}}" alt="category" width="55px" height="33px" style="border-radius: 10px; background-image: cover;">
                         </td>

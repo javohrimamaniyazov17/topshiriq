@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function list()
     {
-        $getRecord = Product::select('products.*', 'categories.name as category_name')->join('categories', 'categories.id', '=', 'products.category_id', 'left')->get();
+        $getRecord = Product::select('products.*', 'categories.name as category_name', 'users.name as created_by_name')->join('categories', 'categories.id', '=', 'products.category_id', 'left')->join('users', 'users.id', '=', 'products.user_id', 'left')->get();
         return view('user.product.list', compact('getRecord'));
     }
 

@@ -12,12 +12,12 @@ class CategoryController extends Controller
     public function list()
     {
         $getRecord = Category::get();
-        return view('user.category.list', compact('getRecord'));
+        return view('admin.category.list', compact('getRecord'));
     }
 
     public function add()
     {
-        return view('user.category.add');
+        return view('admin.category.add');
     }
 
     public function insert(Request $request)
@@ -46,17 +46,13 @@ class CategoryController extends Controller
         $category->user_id = Auth::user()->id;
         $category->save();
 
-        return redirect('user/category/list')->with('success', 'Kategoriya muvaffaqiyatli qo\'shildi');
+        return redirect('admin/category/list')->with('success', 'Kategoriya muvaffaqiyatli qo\'shildi');
     }
 
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-        if (Auth::user()->id === $category->user_id) {
-            return view('user.category.edit', compact('category'));
-        }
-
-        return redirect('user/category/list')->with('error', "Siz bunday huquqqa ega emassiz");
+        return view('admin.category.edit', compact('category'));
     }
 
     public function update(Request $request, $id)
@@ -67,45 +63,37 @@ class CategoryController extends Controller
         ]);
 
         $category = Category::findOrFail($id);
-        if (Auth::user()->id === $category->user_id) {
-            $category->name = $request->name;
-            if (!empty($request->file('image'))) {
-                if (!empty($category)) {
-                    unlink('upload/images/' . $category->image);
-                }
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $file = $request->file('image');
-                $randomStr = date('Ymdhis') . Str::random(20);
-                $filename = strtolower($randomStr) . '.' . $extension;
-                $file->move('upload/images/', $filename);
-
-                $category->image = $filename;
+        $category->name = $request->name;
+        if (!empty($request->file('image'))) {
+            if (!empty($category)) {
+                unlink('upload/images/' . $category->image);
             }
-            $category->status = $request->status;
-            $category->save();
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $file = $request->file('image');
+            $randomStr = date('Ymdhis') . Str::random(20);
+            $filename = strtolower($randomStr) . '.' . $extension;
+            $file->move('upload/images/', $filename);
 
-            return redirect('user/category/list')->with('succes', 'Kategoriya ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
+            $category->image = $filename;
         }
+        $category->status = $request->status;
+        $category->save();
 
-        return redirect('user/category/list')->with('error', "Siz bunday huquqqa ega emassiz");
+        return redirect('admin/category/list')->with('succes', 'Kategoriya ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
     }
 
     public function delete($id)
     {
 
         $category = Category::findOrFail($id);
-        if (Auth::user()->id === $category->user_id) {
-            $category->delete();
+        $category->delete();
 
-            return redirect('user/category/list');
-        }
-
-        return redirect('user/category/list')->with('error', "Siz bunday huquqqa ega emassiz");
+        return redirect('admin/category/list');
     }
 
     public function show($id)
     {
         $category = Category::findOrFail($id);
-        return view('user.category.show', compact('category'));
+        return view('admin.category.show', compact('category'));
     }
 }

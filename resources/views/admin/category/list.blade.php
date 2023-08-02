@@ -14,7 +14,7 @@
           <h1>Category List</h1>
         </div>
         <div class="col-sm-6" style="text-align: right">
-          <a href="{{ url('user/category/add')}}" class="btn btn-primary">Add new Category</a>
+          <a href="{{ url('admin/category/add')}}" class="btn btn-primary">Add new Category</a>
         </div>
       </div>
     </div><!-- /.container-fluid -->
@@ -86,11 +86,9 @@
                           @endif
                           </td>
                         <td>
-                          <a href="{{  url('user/category/show/'.$item->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-eye"></i></a>
-                          @if ($item->user_id === auth()->user()->id)
-                          <a href="{{  url('user/category/edit/'.$item->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-solid fa-pen"></i></a>
-                          <a href="{{  url('user/category/delete/'.$item->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                          @endif
+                          <a href="{{  url('admin/category/show/'.$item->id)}}" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-eye"></i></a>
+                          <a href="{{  url('admin/category/edit/'.$item->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-solid fa-pen"></i></a>
+                          <a href="{{  url('admin/category/delete/'.$item->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
                       </tr>
                   @endforeach
