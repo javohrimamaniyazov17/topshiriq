@@ -71,7 +71,7 @@
                               class="nav-link @if (Request::segment(2) == 'users') active @endif">
                               <i class="nav-icon fas fa-users"></i>
                               <p>
-                                  Users
+                                  Foydalanuvchilar
                               </p>
                           </a>
                       </li>
@@ -81,7 +81,7 @@
                               class="nav-link @if (Request::segment(2) == 'category') active @endif">
                               <i class="nav-icon fas fa-list"></i>
                               <p>
-                                  Category
+                                  Kategoriyalar
                               </p>
                           </a>
                       </li>
@@ -91,7 +91,7 @@
                               class="nav-link @if (Request::segment(2) == 'product') active @endif">
                               <i class="nav-icon fas fa-shopping-cart"></i>
                               <p>
-                                  Product
+                                  Mahsulotlar
                               </p>
                           </a>
                       </li>
@@ -112,7 +112,7 @@
                               class="nav-link @if (Request::segment(2) == 'product') active @endif">
                               <i class="nav-icon fas fa-shopping-cart"></i>
                               <p>
-                                  Product
+                                  Mahsulotlar
                               </p>
                           </a>
                       </li>
