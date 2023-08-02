@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Add New User</h1>
+                        <h1>Foydalanuvchi Ma'lumotlarini O'zgartirish</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -26,29 +26,29 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>Name <span style="color: red">*</span></label>
+                                        <label>Foydalanuvchi Ismi <span style="color: red">*</span></label>
                                         <input type="text" name="name" required value="{{ $user->name }}"
                                             class="form-control" placeholder="First Name">
                                         <p class="text-danger">{{ $errors->first('name') }}</p>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Email <span style="color: red">*</span></label>
+                                        <label>Elektron Pochta <span style="color: red">*</span></label>
                                         <input type="email" name="email" required value="{{ $user->email }}"
-                                            class="form-control" placeholder="Email">
+                                            class="form-control" placeholder="Elektron Pochta">
                                         <p class="text-danger">{{ $errors->first('email') }}</p>
                                     </div>
                                     <div class="form-group">
-                                        <label>Password <span style="color: red"></span></label>
+                                        <label>Parol <span style="color: red"></span></label>
                                         <input type="password" name="password" class="form-control"
-                                            placeholder="Password">
+                                            placeholder="Parol">
                                         <p class="text-danger">{{ $errors->first('password') }}</p>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">O'zgartirish</button>
                                 </div>
                             </form>
                         </div>
