@@ -30,7 +30,7 @@
              <div class="inner">
                <h3>{{ count($users)}}</h3>
 
-               <p style="font-size: 19px">All Users</p>
+               <p style="font-size: 19px">Barcha Foydalanuvchilar</p>
              </div>
              <div class="icon">
                <i class="ion ion-person"></i>
@@ -44,7 +44,7 @@
              <div class="inner">
                <h3>{{count($user)}}</h3>
 
-               <p style="font-size: 19px">Admins</p>
+               <p style="font-size: 19px">Adminlar</p>
              </div>
              <div class="icon">
                <i class="fas fa-user-cog"></i>
@@ -58,7 +58,7 @@
              <div class="inner">
                <h3>{{count($category)}}</h3>
 
-               <p style="font-size: 19px">All Categories</p>
+               <p style="font-size: 19px">Barcha Kategoriyalar</p>
              </div>
              <div class="icon">
                <i class="ion ion-grid"></i>
@@ -72,7 +72,7 @@
              <div class="inner">
                <h3>{{ count($product)}}</h3>
 
-               <p style="font-size: 19px">All Products</p>
+               <p style="font-size: 19px">Barcha Mahsulotlar</p>
              </div>
              <div class="icon">
                <i class="nav-icon fas fa-shopping-cart"></i>
