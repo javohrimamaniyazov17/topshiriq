@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Add New Category</h1>
+                        <h1>Yangi Mahsulot Qo'shish</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -26,20 +26,20 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>Name <span style="color: red">*</span></label>
+                                        <label>Mahsulot Nomi <span style="color: red">*</span></label>
                                         <input type="text" name="name" required value="{{ old('name') }}"
-                                            class="form-control" placeholder="Name">
+                                            class="form-control" placeholder="Mahsulot Nomi">
                                         <p class="text-danger">{{ $errors->first('name') }}</p>
                                     </div>
                                     <div class="d-flex">
                                         <div class="form-group col-md-6">
-                                            <label>Picture <span style="color: red"></span></label>
+                                            <label>Rasm <span style="color: red">*</span></label>
                                             <input type="file" name="image" class="form-control">
                                             <p class="text-danger">{{ $errors->first('image') }}</p>
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>Status <span style="color: red">*</span></label>
+                                            <label>Holat <span style="color: red">*</span></label>
                                             <select class="form-control" required name="status">
                                                 <option value="">Select Status</option>
                                                 <option {{ old('status' == 0) ? 'selected' : '' }} value="0">Inactive
@@ -53,7 +53,7 @@
                                         
                                     </div>
                                     <div class="form-group col-md-6">
-                                      <label>Category Name <span style="color: red">*</span></label>
+                                      <label>Kategoriya Nomi <span style="color: red">*</span></label>
                                       <select class="form-control" required name="category_id">
                                           <option value="">Select Category</option>
                                          @foreach ($category as $item)
@@ -66,7 +66,7 @@
                                     <!-- /.card-body -->
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Yaratish</button>
                                     </div>
                             </form>
                         </div>
