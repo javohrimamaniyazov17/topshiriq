@@ -58,58 +58,50 @@
                                 <h3 class="card-title">All Products</h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body p-0" style="overflow: auto">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Product Name</th>
-                                            <th>Category Name</th>
-                                            <th>Created By</th>
-                                            <th>Image</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                            <table id="productTable" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product Name</th>
+                                        <th>Category Name</th>
+                                        <th>Created By</th>
+                                        <th>Image</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="cursor: pointer;">
+                                    @foreach ($products as $item)
+                                        <tr data-id="{{ $item->id }}" style="cursor: pointer;">
+                                            <td><i class="fas fa-solid fa-bars"></i></td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->category_name }}</td>
+                                            <td>{{ $item->created_by_name }}</td>
+                                            <td>
+                                                <img src="{{ asset('/images/product/' . $item->image) }}" alt="category"
+                                                    width="55px" height="33px"
+                                                    style="border-radius: 10px; background-image: cover;">
+                                            </td>
+                                            <td>
+                                                @if ($item->status == 1)
+                                                    Active
+                                                @else
+                                                    Inactive
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ url('admin/product/show/' . $item->id) }}"
+                                                    class="btn btn-primary btn-sm"><i class="fas fa-solid fa-eye"></i></a>
+                                                <a href="{{ url('admin/product/edit/' . $item->id) }}"
+                                                    class="btn btn-warning btn-sm"><i class="fas fa-solid fa-pen"></i></a>
+                                                <a href="{{ url('admin/product/delete/' . $item->id) }}"
+                                                    class="btn btn-danger btn-sm"><i class="fa fa-trash"
+                                                        aria-hidden="true"></i></a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($getRecord as $item)
-                                            <tr>
-                                                <td>{{ $item->id }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->category_name }}</td>
-                                                <td>{{ $item->created_by_name }}</td>
-                                                <td>
-                                                    <img src="{{ asset('/images/product/' . $item->image) }}" alt="category"
-                                                        width="55px" height="33px"
-                                                        style="border-radius: 10px; background-image: cover;">
-                                                </td>
-                                                <td>
-                                                    @if ($item->status == 1)
-                                                        Active
-                                                    @else
-                                                        Inactive
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <a href="{{ url('admin/product/show/' . $item->id) }}"
-                                                        class="btn btn-primary btn-sm"><i
-                                                            class="fas fa-solid fa-eye"></i></a>
-                                                    @if ($item->user_id === auth()->user()->id || auth()->user_type == 1)
-                                                        <a href="{{ url('admin/product/edit/' . $item->id) }}"
-                                                            class="btn btn-warning btn-sm"><i
-                                                                class="fas fa-solid fa-pen"></i></a>
-                                                        <a href="{{ url('admin/product/delete/' . $item->id) }}"
-                                                            class="btn btn-danger btn-sm"><i class="fa fa-trash"
-                                                                aria-hidden="true"></i></a>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="m-3 float-right">
-                                </div>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
@@ -122,4 +114,65 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tableBody = document.getElementById('productTable').querySelector('tbody');
+    
+            // Get the current row order from localStorage (if available)
+            var savedOrder = localStorage.getItem('productTable_order');
+            if (savedOrder) {
+                savedOrder = JSON.parse(savedOrder);
+            }
+    
+            // Update the table with the new row order
+            updateTableOrder(savedOrder);
+    
+            // Initialize Sortable.js on the table to make the rows sortable
+            var sortableTable = new Sortable(tableBody, {
+                animation: 150, // Set the animation speed in milliseconds (optional)
+                onEnd: function (evt) {
+                    // This function is triggered when the user stops dragging a row
+                    // Use the 'evt' parameter to access the updated row order
+                    var updatedOrder = Array.from(tableBody.children).map(function (row) {
+                        return row.dataset.id;
+                    });
+    
+                    // Save the updated row order to localStorage
+                    localStorage.setItem('productTable_order', JSON.stringify(updatedOrder));
+                }
+            });
+    
+            // Function to update the table rows order
+            function updateTableOrder(order) {
+                if (!order) {
+                    // If no order is available, use the default order
+                    order = Array.from(tableBody.children).map(function (row) {
+                        return row.dataset.id;
+                    });
+                }
+    
+                var rows = Array.from(tableBody.children);
+                var newRowOrder = [];
+    
+                order.forEach(function (id) {
+                    var row = rows.find(function (row) {
+                        return row.dataset.id === id;
+                    });
+                    if (row) {
+                        newRowOrder.push(row);
+                    }
+                });
+    
+                // Remove all existing rows from the table body
+                while (tableBody.firstChild) {
+                    tableBody.removeChild(tableBody.firstChild);
+                }
+    
+                // Append the rows back to the table body in the new order
+                newRowOrder.forEach(function (row) {
+                    tableBody.appendChild(row);
+                });
+            }
+        });
+    </script>
 @endsection

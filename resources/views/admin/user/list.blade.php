@@ -44,10 +44,6 @@
                   <label>Email</label>
                   <input type="text" name="email"  value="{{Request::get('email')}}" class="form-control" placeholder="Email">
                 </div>
-                <div class="form-group col-md-3">
-                  <label>Date</label>
-                  <input type="date" name="date"  value="{{Request::get('date')}}" class="form-control" placeholder="Email">
-                </div>
                 
                 <div class="form-group col-md-3">
                   <button class="btn btn-primary" type="submit" style="margin-top: 30px;">Search</button>
@@ -78,7 +74,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($getRecord as $item)
+                  @foreach ($users as $item)
                       <tr>
                         <td>{{ $item->id}}</td>
                         <td>{{ $item->name}}</td>

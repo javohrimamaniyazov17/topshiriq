@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -48,13 +49,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/category/delete/{id}', [CategoryController::class, 'delete']);
 
     //product
-    Route::get('/admin/product/list', [ProductController::class, 'list']);
-    Route::get('/admin/product/add', [ProductController::class, 'add']);
-    Route::post('/admin/product/add', [ProductController::class, 'insert']);
-    Route::get('/admin/product/edit/{id}', [ProductController::class, 'edit']);
-    Route::post('/admin/product/edit/{id}', [ProductController::class, 'update']);
-    Route::get('/admin/product/delete/{id}', [ProductController::class, 'delete']);
-    Route::get('admin/product/show/{id}', [ProductController::class, 'show']);
+    Route::get('/admin/product/list', [AdminController::class, 'list']);
+    Route::get('/admin/product/add', [AdminController::class, 'add']);
+    Route::post('/admin/product/add', [AdminController::class, 'insert']);
+    Route::get('/admin/product/edit/{id}', [AdminController::class, 'edit']);
+    Route::post('/admin/product/edit/{id}', [AdminController::class, 'update']);
+    Route::get('/admin/product/delete/{id}', [AdminController::class, 'delete']);
+    Route::get('admin/product/show/{id}', [AdminController::class, 'show']);
 });
 
 Route::group(['middleware' => 'user'], function () {

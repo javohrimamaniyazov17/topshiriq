@@ -9,10 +9,18 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $getRecord = Category::get();
-        return view('admin.category.list', compact('getRecord'));
+        $query = Category::query();
+
+        $searchName = $request->input('name');
+        if ($searchName) {
+            $query->where('name', 'like', '%' . $searchName . '%');
+        }
+
+        $categories = $query->get();
+
+        return view('admin.category.list', compact('categories'));
     }
 
     public function add()
@@ -88,7 +96,8 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect('admin/category/list');
+        return redirect('
+        y/list');
     }
 
     public function show($id)

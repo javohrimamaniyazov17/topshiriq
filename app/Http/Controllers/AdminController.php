@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-
-class ProductController extends Controller
+class AdminController extends Controller
 {
     public function list(Request $request)
     {
@@ -25,13 +24,13 @@ class ProductController extends Controller
 
         $products = $getRecord->get();
 
-        return view('user.product.list', compact('products'));
+        return view('admin.product.list', compact('products'));
     }
 
     public function add()
     {
         $category = Category::get();
-        return view('user.product.add', compact('category'));
+        return view('admin.product.add', compact('category'));
     }
 
     public function insert(Request $request)
@@ -58,18 +57,15 @@ class ProductController extends Controller
         $product->user_id = Auth::user()->id;
         $product->save();
 
-        return redirect('user/product/list')->with('success', 'Mahsulot muvaffaqiyatli qo\'shildi');
+        return redirect('admin/product/list')->with('success', 'Mahsulot muvaffaqiyatli qo\'shildi');
     }
 
     public function edit($id, Request $request)
     {
         $category = Category::get();
         $product = Product::findOrFail($id);
-        if (Auth::user()->id === $product->user_id) {
-            return view('user.product.edit', compact('product', 'category'));
-        }
 
-        return redirect('user/product/list')->with('error', "Siz bunday huquqqa ega emassiz");
+        return view('admin.product.edit', compact('product', 'category'));
     }
 
 
@@ -82,47 +78,38 @@ class ProductController extends Controller
         ]);
 
         $product = Product::findOrFail($id);
-
-        if (Auth::user()->id === $product->user_id) {
-            $product->name = $request->name;
-            $product->category_id = $request->category_id;
-            $product->status = $request->status;
-            if (!empty($request->file('image'))) {
-                if (!empty($product)) {
-                    unlink('images/product/' . $product->image);
-                }
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $file = $request->file('image');
-                $randomStr = date('Ymdhis') . Str::random(20);
-                $filename = strtolower($randomStr) . '.' . $extension;
-                $file->move('images/product/', $filename);
-
-                $product->image = $filename;
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->status = $request->status;
+        if (!empty($request->file('image'))) {
+            if (!empty($product)) {
+                unlink('images/product/' . $product->image);
             }
-            $product->save();
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $file = $request->file('image');
+            $randomStr = date('Ymdhis') . Str::random(20);
+            $filename = strtolower($randomStr) . '.' . $extension;
+            $file->move('images/product/', $filename);
 
-            return redirect('user/product/list')->with('success', 'Mahsulot ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
+            $product->image = $filename;
         }
+        $product->save();
 
-        return redirect('user/product/list')->with('error', "Siz bunday huquqqa ega emassiz");
+        return redirect('admin/product/list')->with('success', 'Mahsulot ma\'lumotlari muvaffaqiyatli o\'zgartirildi');
     }
 
     public function delete($id)
     {
         $product = Product::findOrFail($id);
-        if (Auth::user()->id === $product->user_id) {
-            $product->delete();
+        $product->delete();
 
-            return redirect('user/product/list')->with('success', 'Mahsulot muvaffaqiyatli o\'chirildi');
-        }
-
-        return redirect('user/product/list')->with('error', "Siz bunday huquqqa ega emassiz");
+        return redirect('admin/product/list')->with('success', 'Mahsulot muvaffaqiyatli o\'chirildi');
     }
 
     public function show($id)
     {
         $category = Category::get();
         $product = Product::findOrFail($id);
-        return view('user.product.show', compact('category', 'product'));
+        return view('admin.product.show', compact('category', 'product'));
     }
 }
