@@ -9,7 +9,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-12">
-          <h1 class="m-0">User Dashboard</h1>
+          <h1 class="m-0">Foydalanuvchi Dashboard</h1>
         </div><!-- /.col -->
   
       </div><!-- /.row -->
@@ -26,9 +26,9 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{ count($users)}}</h3>
 
-              <p style="font-size: 19px;">All Users</p>
+              <p style="font-size: 19px;">Barcha Foydalanuvchilar</p>
             </div>
             <div class="icon">
               <i class="ion ion-person"></i>
@@ -40,9 +40,9 @@
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>53</h3>
+              <h3>{{count($category)}}</h3>
 
-              <p style="font-size: 19px;">All Categories</p>
+              <p style="font-size: 19px;">Barcha Kategoriyalar</p>
             </div>
             <div class="icon">
               <i class="ion ion-grid"></i>
@@ -55,9 +55,9 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{count($product)}}</h3>
 
-              <p>All Products</p>
+              <p>Barcha Mahsulotlar</p>
             </div>
             <div class="icon">
               <i class="nav-icon fas fa-shopping-cart"></i>
